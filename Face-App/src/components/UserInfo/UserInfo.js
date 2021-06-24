@@ -13,9 +13,7 @@ import {
 
 import companyLogo from "../../img/logo.png";
 
-
 const styles = (theme) => ({
-  
   paper: {
     display: "flex",
     flexDirection: "column",
@@ -62,12 +60,10 @@ const styles = (theme) => ({
   },
 });
 
-
 class UserInfo extends Component {
   constructor() {
     super();
-    this.state = {    
-    };
+    this.state = {};
   }
 
   render() {
@@ -82,45 +78,45 @@ class UserInfo extends Component {
     } = this.props.userInfo;
 
     return (
-        <Grid item sm={8} md={5}>
-           <div className={classes.paper}>
-            <Card className={classes.card}>
-              <CardMedia
-                className={classes.cardMedia}
-                image={`http://localhost:2800/public/${userImage}`}
-                title={userName}
-              />
-              <CardContent className={classes.cardContent}>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {userName}
-                </Typography>
-                <Typography>NID:&nbsp;{nidNo}</Typography>
-                <Typography>PensionType:&nbsp;{pensiontype}</Typography>
-                <Typography>Date of Birth:&nbsp;{dateOfBirth}</Typography>
-                <Typography>
-                  Current Payment Type:&nbsp;{currentPayPoint}
-                </Typography>
-              </CardContent>
-            </Card>
+      <Grid item sm={8} md={5}>
+        <div className={classes.paper}>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.cardMedia}
+              image={`https://118.67.215.228:2800/public/${userImage}`}
+              title={userName}
+            />
+            <CardContent className={classes.cardContent}>
+              <Typography gutterBottom variant="h5" component="h2">
+                {userName}
+              </Typography>
+              <Typography>NID:&nbsp;{nidNo}</Typography>
+              <Typography>PensionType:&nbsp;{pensiontype}</Typography>
+              <Typography>Date of Birth:&nbsp;{dateOfBirth}</Typography>
+              <Typography>
+                Current Payment Type:&nbsp;{currentPayPoint}
+              </Typography>
+            </CardContent>
+          </Card>
 
-            <Typography variant="h6" className={classes.mt20}>
-              Face Detection App. Developed By
-            </Typography>
-            <img src={companyLogo} alt="Company Logo" />
-            <Container maxWidth="xs">
-              <Button
-                component={Link}
-                to="/"
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="large"
-              >
-                Back to Homepage
-              </Button>
-            </Container>
-          </div> 
-        </Grid>
+          <Typography variant="h6" className={classes.mt20}>
+            Face Detection App. Developed By
+          </Typography>
+          <img src={companyLogo} alt="Company Logo" />
+          <Container maxWidth="xs">
+            <Button
+              component={Link}
+              to="/"
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+            >
+              Back to Homepage
+            </Button>
+          </Container>
+        </div>
+      </Grid>
     );
   }
 }

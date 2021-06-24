@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // import logo from './logo.svg';
 // import './App.css';
-import { FaceLogin, NidUser, NotFound, Welcome } from "./pages";
+import { FaceLogin, NidUser, NotFound, Register, Welcome } from "./pages";
 
 class App extends Component {
   state = {
@@ -17,6 +17,7 @@ class App extends Component {
           <Route exact path="/" component={Welcome} />
           <Route exact path="/face-login" component={FaceLogin} />
           <Route exact path="/nid-user" component={NidUser} />
+          <Route exact path="/signup" component={Register} />
           <Route component={NotFound} />
         </Switch>
       </Router>

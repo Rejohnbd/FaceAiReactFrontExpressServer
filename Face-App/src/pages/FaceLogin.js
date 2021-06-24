@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Webcam from "react-webcam";
 import Loader from "react-loader-spinner";
-import faceServerInstance from '../utils/FaceDataServer';
-import dataServerInstance from '../utils/DataServer';
+import faceServerInstance from "../utils/FaceDataServer";
+import dataServerInstance from "../utils/DataServer";
 import Swal from "sweetalert2";
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 
@@ -58,7 +58,7 @@ class FaceLogin extends Component {
       imgSrc: null,
       mediaError: false,
       mediaLoading: true,
-      userInfo:{}
+      userInfo: {},
     };
 
     this.webcamRef = React.createRef(null);
@@ -81,55 +81,63 @@ class FaceLogin extends Component {
     const base64Format = this.webcamRef.current.getScreenshot();
     // console.log(base64Format.substring(23));
     // this.setState({ imgSrc: base64Format });
-    
+
     const datas = {
-      task: 'FACE_MATCHING_WITH_SPOOF',
-      file: base64Format.substring(23)
-    }
-    
+      task: "FACE_MATCHING_WITH_SPOOF",
+      file: base64Format.substring(23),
+    };
+
+    // const datas = {
+    //   user_id: "hasan",
+    //   task: "FACE_MATCHING",
+    //   file: base64Format.substring(23),
+    // };
+
     this.checkUserFace(datas);
   };
 
   checkUserFace = async (datas) => {
+    console.log("Send base64");
     await faceServerInstance
       .post("/predict", datas)
       .then((response) => {
-        // console.log(response)
-        if (response.data.bbox !== null && response.data.user_id !== 'unknown' & response.data.spoof === 'no') {
-          console.log(response.data.user_id)
+        console.log(response);
+
+        if (
+          response.data.bbox !== null &&
+          (response.data.user_id !== "unknown") & (response.data.spoof === "no")
+        ) {
+          console.log(response.data.user_id);
           const nidNo = {
             nidNo: response.data.user_id,
           };
           this.checkUserNid(nidNo);
         }
-        if(response.data.bbox === null){
+        if (response.data.bbox === null) {
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Face Not Found. Try Again!',
-          })
+            icon: "error",
+            title: "Oops...",
+            text: "Face Not Found. Try Again!",
+          });
         }
 
-        if(response.data.bbox !== null && response.data.user_id === 'unknown'){
-          Swal.fire(
-            'Face Not Matched',
-            'Try Again......',
-            'question'
-          )
+        if (
+          response.data.bbox !== null &&
+          response.data.user_id === "unknown"
+        ) {
+          Swal.fire("Face Not Matched", "Try Again......", "question");
         }
 
-        if(response.data.bbox !== null && response.data.spoof === 'yes'){
+        if (response.data.bbox !== null && response.data.spoof === "yes") {
           Swal.fire({
-            icon: 'warning',
-            title: 'Alert !',
-            text: 'Please Provide Real Face',
-          })
+            icon: "warning",
+            title: "Alert !",
+            text: "Please Provide Real Face",
+          });
         }
-
-
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         // if (err.response.status === 404) {
         //   Swal.fire({
         //     icon: "error",
@@ -145,7 +153,7 @@ class FaceLogin extends Component {
       .post("/user/checknid", nidNo)
       .then((response) => {
         if (response.status === 200) {
-          this.setState({userInfo: response.data.datas});
+          this.setState({ userInfo: response.data.datas });
         }
       })
       .catch((err) => {
@@ -184,7 +192,7 @@ class FaceLogin extends Component {
         </Button>
       </>
     );
-    
+
     return (
       <Grid container>
         <Grid item xs={12} sm={4} md={7}>
@@ -228,8 +236,11 @@ class FaceLogin extends Component {
             </Container>
           </div>
         </Grid>
-        {(Object.keys(this.state.userInfo).length === 0) ? <WelcomeSidebar />: <UserInfo userInfo={this.state.userInfo} />}
-        
+        {Object.keys(this.state.userInfo).length === 0 ? (
+          <WelcomeSidebar />
+        ) : (
+          <UserInfo userInfo={this.state.userInfo} />
+        )}
       </Grid>
     );
   }
