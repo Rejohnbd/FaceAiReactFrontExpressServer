@@ -64,7 +64,6 @@ router.post("/user-image", upload.single("userImage"), (req, res) => {
         return res.status(404).json({ message: "User Not Found" });
       } else {
         if (doc.userImage === "null") {
-          // console.log(req.file);
           const file = req.file;
           let imagePath = file.path;
           let pathArray = imagePath.split("public\\");
@@ -84,11 +83,6 @@ router.post("/user-image", upload.single("userImage"), (req, res) => {
     .catch((err) => {
       return res.status(500).json({ error: err });
     });
-  // console.log(req.body.nidNo);
-  // const newUser = new UserInfo({
-  //   nidNo: req.body.nidNo,
-  // });
-  // newUser.save();
 });
 
 router.post("/user-image-upload", upload.single("userImage"), (req, res) => {
@@ -117,7 +111,6 @@ router.post("/user-image-upload", upload.single("userImage"), (req, res) => {
           createdAt: createdAt,
           userImage: pathArray[1],
         });
-        console.log(userData);
 
         userData.save().then((doc) => {
           return res
@@ -129,12 +122,6 @@ router.post("/user-image-upload", upload.single("userImage"), (req, res) => {
     .catch((err) => {
       return res.status(500).json({ error: err });
     });
-
-  // console.log(req.body.nidNo);
-  // const newUser = new UserInfo({
-  //   nidNo: req.body.nidNo,
-  // });
-  // newUser.save();
 });
 
 router.post("/checknid", (req, res) => {
@@ -142,7 +129,6 @@ router.post("/checknid", (req, res) => {
     .exec()
     .then((user) => {
       if (user) {
-        console.log(user);
         return res.status(200).json({ datas: user });
       } else {
         return res
